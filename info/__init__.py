@@ -15,6 +15,8 @@ db = SQLAlchemy()
 redis_store = None  # type: StrictRedis
 
 """记录日志的配置"""
+
+
 def setup_log(config_name):
     # 下面到函数调用后 根据传入的参数 找不到不同的项目配置类
     # 将configClass传入到logging.basicConfig(level=configClass)，但是需要不同环境中设置好日志级别，来调用。
@@ -30,6 +32,7 @@ def setup_log(config_name):
     # 为全局的日志工具对象（flask app使用的）添加日志记录器
     logging.getLogger().addHandler(file_log_handler)
 
+
 """
 # ofo生产单车：原材料--->车间--->小黄
 # 工厂方法：传入配置名称--->返回对应配置的app对象
@@ -38,6 +41,8 @@ def setup_log(config_name):
 """
 # todo 谁传给你参数
 """创建app  create_app方法：工厂方法"""
+
+
 def craete_app(config_name):
     # 之所以在这里调用日志函数  是因为日志和运行环境有关系，要是运行环境日志就不用经常显示错误 增加服务器压力。开发环境就不一样
     setup_log(config_name)
@@ -64,6 +69,10 @@ def craete_app(config_name):
     csrf = CSRFProtect(app)
     # 创建Session对象，将Session的存储方法进行调整（flask后端内存调整到redis服务器）
     Session(app)
+
+    # 注册首页蓝图对象
+    from info.moduls.index import index_bp
+    app.register_blueprint(index_bp)
 
     # 返回不同模式下的app对象  开发模式  生产模式
     return app
