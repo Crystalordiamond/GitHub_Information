@@ -1,3 +1,4 @@
+import logging
 from redis import StrictRedis
 
 
@@ -27,12 +28,13 @@ class Config(object):
 class DevelopmentConfig(Config):
     """development开发环境"""
     DEBUG = True
+    LOG_LEVEL = logging.DEBUG
 
 
 class ProductionConfig(Config):
     """production生产环境"""
     DEBUG = False
-
+    LOG_LEVEL = logging.WARNING
 
 # 给外界暴露一个使用配置类到接口
 # 使用方法： config_dict['development'] --> DevelopmentConfig 开发环境的配置类  字典根据键取值
