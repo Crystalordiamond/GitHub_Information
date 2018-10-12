@@ -1,3 +1,6 @@
+import logging
+
+from flask import current_app
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from info  import craete_app, db
@@ -16,6 +19,13 @@ manager.add_command("db", MigrateCommand)
 
 @app.route('/')
 def hello_world():
+    logging.debug("我是debug级别日志")
+    logging.info("我是infog级别日志")
+    logging.warning("我是warning级别日志")
+    logging.error("我是error级别日志")
+    logging.critical("我是critical级别日志")
+    # flask中对logging模块进行封装，直接用current_app调用（常见）
+    current_app.logger.debug("falsk中记录的debug日志")
     return "Hello World"
 
 
