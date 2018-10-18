@@ -73,6 +73,9 @@ def craete_app(config_name):
     # 注册首页蓝图对象
     from info.moduls.index import index_bp
     app.register_blueprint(index_bp)
+    # 注册(注册页面)蓝图对象
+    from info.moduls.passport import passport_bp
+    app.register_blueprint(passport_bp)
 
     # 返回不同模式下的app对象  开发模式  生产模式
     return app
